@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 
 class survey_page (models.Model):
@@ -6,3 +7,4 @@ class survey_page (models.Model):
     last_name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
     gender = models.CharField(max_length=200)
+    date = models.DateTimeField(default=datetime.datetime.now)
