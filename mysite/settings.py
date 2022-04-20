@@ -74,12 +74,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'OPTIONS': {
-            'options': '-c search_path=forms'
+            'options': '-c search_path=form'
         },
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': '3991',
-        'HOST': '172.31.180.235',
+        'HOST': '192.168.255.227',
         'PORT': '5433',
     }
 }

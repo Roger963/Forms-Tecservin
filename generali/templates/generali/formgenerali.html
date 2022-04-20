@@ -1,7 +1,23 @@
-{% load static %} hola holaaaa {% load crispy_forms_tags %}
-<form method="post">
+{% load static %} {% load crispy_forms_tags %}
+<form
+  method="POST"
+  action="{% url 'formulario' %}"
+  enctype="multipart/form-data"
+>
   {% csrf_token %}
-  <div class="container">{{ form }}</div>
-
+  <div class="container">
+    <div class="parte1" style="margin-top: 20px">
+      <h1>FORMULARIO “CONOCIMIENTO DEL CLIENTE” (Persona Natural)</h1>
+      <p>
+        La información proporcionada en este documento será de estricta
+        confidencialidad, misma que será utilizada por Generali Ecuador Compañía
+        de Seguros S.A.(en adelante la “Compañía”) para la emisión de pólizas.
+      </p>
+    </div>
+    <div class="titles">
+      <h2>DATOS DE LA RELACIÓN COMERCIAL</h2>
+    </div>
+    <div class="parte2"> {{ form.cliente}} </div>
+  </div>
   <button type="submit">Submit</button>
 </form>

@@ -4,6 +4,10 @@ from .forms import FormularioForm
 
 # Create your views here.
 def form_generali(request):
-    form = FormularioForm(request.POST, request.FILES)
-    print(request.FILES)
-    return render(request,'generali/formgenerali.html',{'form':form})
+    if request.POST:
+        form = FormularioForm(request.POST, request.FILES)
+        print(request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect(form_generali)
+    return render(request,'generali/formgenerali.html',{'form':FormularioForm})

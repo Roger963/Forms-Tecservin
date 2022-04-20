@@ -3,125 +3,117 @@ from django.db import models
 
 
 class Formulario(models.Model):
-    client_choices = (
-        ('N','Nuevo'),
-        ('R','Renovacion'),
-    )
-    ramo_choices = (
-        ('vehiculo','VEHICULOS'),
-        ('vidagrupal','VIDA EN GRUPO'),
-        ('vidaindividuak','VIDA INDIVIDUAL'),
-        ('incendio','INCENDIO'),
-        ('transporte','TRANSPORTE'),
-        ('contratistas','CONTRATISTAS'),
-        ('casoaviones','CASCO DE AVIONES'),
-        ('accidentepersonal','ACCIDENTES PERSONALES'),
-        ('asistenciamedica','ASISTENCIA MEDICA'),
-        ('equipoelectronico','EQUIPO ELECTRONICO'),
-        ('robo','ROBO'),
-        ('responsabilidadcivil','RESPONSABILIDAD CIVIL'),
-        ('roturamaquinaria','ROTURA DE MAQUINARIA'),
-        ('cascobuque','CASCO DE BUQUE'),
-        ('cumplimientocontrato','CUMPLIMIENTO DE CONTRATO'),
-        ('fidelidad','FIDELIDAD'),
-        ('montajeriesgo','MONTAJE TODO RIESGO'),
-        ('salud','SALUD'),
-    )
-    typeid_choices = (
-        ('Cedula','Cedula'),
-        ('Pasaporte','Pasaporte'),
-        ('RUC','RUC'),
-    )
-    sex_choices = (
-        ('M','M'),
-        ('F','F'),
-    )
-    civilstat_choices = (
-        ('Soltero','Soltero'),
-        ('Casado','Casado'),
-        ('Divorciado','Divorciado'),
-        ('U/Libre','U/Libre'),
-        ('Viudo','Viudo'),
-        ('Separado','Separado'),
-    )
-    city_choices = (
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-    )
-    prov_choices = (
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-        ('',''),
-    )
-    bond_choices = (
-        ('Familiar','Familiar'),
-        ('Comercial','Comercial'),
-        ('Laboral','Laboral'),
-        ('Ninguna','Ninguna'),
-        ('Otros','Otros')
-    )
-    
-    cliente = models.TextChoices(
-        max_length = 200,
-        choices = cliente_choices.choices,
-        verbose_name = "cliente")
-    tiposeguro = models.CharField(
-        max_length = 200,
-        choices = tiposeguro_choices)
+    cliente = models.CharField(max_length = 200)
+    tiposeguro = models.CharField(max_length = 200)
     sumasegurada = models.IntegerField()
-
-    doc_solicit = models.CharField(max_length = 200, choices = tipoid_choices)
+    
+    doc_solicit = models.CharField(max_length = 200)
     num_solicit = models.IntegerField()
     apell_solicit = models.CharField(max_length = 200)
     name_solicit = models.CharField(max_length = 200)
-    sex_solicit = models.CharField(max_length = 200, choices = sexo_choices)
-    state_solicit = models.CharField(max_length = 200, choices = stateciv_choices)
-    nacim_solicit = mdoels.CharField(max_length = 200)
-    datenacim_solict = models.CharField(max_length = 200)
-    nacio_solicit = models.CharField(max_length = 200)
+    sex_solicit = models.CharField(max_length = 200)
+    state_solicit = models.CharField(max_length = 200)
+    nacim_solicit = models.CharField(max_length = 200)
+    datenacim_solict = models.DateTimeField()
+    nacion_solicit = models.CharField(max_length = 200)
     domic_solicit = models.CharField(max_length = 200)
     ciud_solicit = models.CharField(max_length = 200)
-    pais_solicit
-    prov_solicit
-    tel_solicit
-    email_solicit
-    mail_fact_solicit
-    mail_form_solicit
-    contac_solicit
-    con_doc_solicit
+    pais_solicit = models.CharField(max_length = 200)
+    prov_solicit = models.CharField(max_length = 200)
+    tel_solicit = models.IntegerField()
+    mail_solicit = models.EmailField(max_length = 200)
+    mail_fact_solicit = models.EmailField(max_length = 200)
+    mail_form_solicit = models.EmailField(max_length = 200)
+    contac_solicit = models.CharField(max_length = 200)
     
+    doc_conv = models.CharField(max_length = 200)
+    num_conv = models.IntegerField()
+    apell_conv = models.CharField(max_length = 200)
+    name_conv = models.CharField(max_length = 200)
+
+    vinc_asegur = models.CharField(max_length = 200)
+    specif_asegur = models.CharField(max_length = 200)
+    doc_asegur = models.CharField(max_length = 200)
+    num_asegur = models.IntegerField()
+    apell_asegur = models.CharField(max_length = 200)
+    name_asegur = models.CharField(max_length = 200)
+    sex_asegur = models.CharField(max_length = 200)
+    state_asegur = models.CharField(max_length = 200)
+    nacim_asegur = models.CharField(max_length = 200)
+    datenacim_asegur = models.DateTimeField(auto_now_add=True)
+    nacion_asegur = models.CharField(max_length = 200)
+    domic_asegur = models.CharField(max_length = 200)
+    tel_asegur = models.IntegerField()
+    mail_asegur = models.EmailField(max_length = 200)
+
+    vinc1_benefic = models.CharField(max_length = 200)
+    vinc2_benefic = models.CharField(max_length = 200)
+    doc_benefic = models.CharField(max_length = 200)
+    num_benefic = models.IntegerField()
+    apell_benefic = models.CharField(max_length = 200)
+    name_benefic = models.CharField(max_length = 200)
+    sex_benefic = models.CharField(max_length = 200)
+    state_benefic = models.CharField(max_length = 200)
+    nacim_benefic = models.CharField(max_length = 200)
+    datenacim_benefic = models.DateTimeField()
+    nacion_benefic = models.CharField(max_length = 200)
+    domic_benefic = models.CharField(max_length = 200)
+    tel_benefic = models.IntegerField()
+    mail_benefic = models.EmailField(max_length = 200)
+
+    type_work = models.CharField(max_length = 200)
+    especify_work = models.CharField(max_length = 200)
+    razon_work = models.CharField(max_length = 200)
+    sector_work = models.CharField(max_length = 200)
+    activity_work = models.CharField(max_length = 200)
+    cargo_work = models.CharField(max_length = 200)
+    domic_work = models.CharField(max_length = 200)
+    city_work = models.CharField(max_length = 200)
+    ciud_work = models.CharField(max_length = 200)
+    mail_work = models.EmailField(max_length = 200)
+    tel_work = models.IntegerField()
+
+    ingress_info = models.IntegerField()
+    mesuality_info = models.IntegerField()
+    other_info = models.IntegerField()
+    activos_info = models.IntegerField()
+    pasivos_info = models.IntegerField()
+    patrim_info = models.IntegerField()
+
+    name_reference = models.CharField(max_length = 200)
+    parentesc_reference = models.CharField(max_length = 200)
+    tel_reference = models.IntegerField()
+    target_reference = models.CharField(max_length = 200)
+    instfin_reference = models.CharField(max_length = 200)
+    ctatype_reference = models.CharField(max_length = 200)
+    instbanc_reference = models.CharField(max_length = 200)
+    nameoth_reference = models.CharField(max_length = 200)
+    parentescoth_reference = models.CharField(max_length = 200)
+    teloth_reference = models.CharField(max_length = 200)
+    targetoth_reference = models.CharField(max_length = 200)
+    instfinoth_reference = models.CharField(max_length = 200)
+    ctatypeoth_reference = models.CharField(max_length = 200)
+    instbancoth_reference = models.CharField(max_length = 200)
+
+    emision_factur = models.CharField(max_length = 200)
+    social_factur = models.CharField(max_length = 200)
+    rucci_factur = models.IntegerField()
+    tel_factur = models.IntegerField()
+    domic_factur = models.CharField(max_length = 200)
+    relacion_factur = models.CharField(max_length = 200)
+
+    names_extra = models.CharField(max_length = 200)
+    adicionch_extra = models.CharField(max_length = 200)
+    specific_extra = models.CharField(max_length = 200)
+    func_extra = models.CharField(max_length = 200)
+    canal_extra = models.CharField(max_length = 200)
+
+    ced_file = models.CharField(max_length = 200)
+    serbas_file = models.CharField(max_length = 200)
+    conv_file = models.CharField(max_length = 200)
+    cert_file = models.CharField(max_length = 200)
+    cargo_file = models.CharField(max_length = 200)
+    renta_file = models.CharField(max_length = 200)
+
+    lugar_declaration = models.CharField(max_length = 200)
+    condic_declaration = models.CharField(max_length = 200)
