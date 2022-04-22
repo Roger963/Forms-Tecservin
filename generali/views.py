@@ -10,4 +10,4 @@ def form_generali(request):
         if form.is_valid():
             form.save()
         return redirect(form_generali)
-    return render(request,'generali/formgenerali.html',{'form':FormularioForm})
+    return render(request,'./generali/formgenerali.html',{'form':FormularioForm})

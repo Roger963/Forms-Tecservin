@@ -1,23 +1,41 @@
-{% load static %} {% load crispy_forms_tags %}
-<form
-  method="POST"
-  action="{% url 'formulario' %}"
-  enctype="multipart/form-data"
->
-  {% csrf_token %}
-  <div class="container">
-    <div class="parte1" style="margin-top: 20px">
-      <h1>FORMULARIO “CONOCIMIENTO DEL CLIENTE” (Persona Natural)</h1>
-      <p>
-        La información proporcionada en este documento será de estricta
-        confidencialidad, misma que será utilizada por Generali Ecuador Compañía
-        de Seguros S.A.(en adelante la “Compañía”) para la emisión de pólizas.
-      </p>
-    </div>
-    <div class="titles">
-      <h2>DATOS DE LA RELACIÓN COMERCIAL</h2>
-    </div>
-    <div class="parte2"> {{ form.cliente}} </div>
-  </div>
-  <button type="submit">Submit</button>
-</form>
+{% load static%} {% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static './style.css' %}" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <form
+      method="POST"
+      action="{% url 'formulario' %}"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+
+      <div class="encabezado">
+        <h1>FORMULARIO “CONOCIMIENTO DEL CLIENTE” (Persona Natural)</h1>
+        <p>
+          La información proporcionada en este documento será de estricta
+          confidencialidad, misma que será utilizada por Generali Ecuador
+          Compañía de Seguros S.A.(en adelante la “Compañía”) para la emisión de
+          pólizas.
+        </p>
+      </div>
+      <div class="title1">
+        <h2>DATOS DE LA RELACIÓN COMERCIAL</h2>
+      </div>
+
+      <div class="container1">
+        <span></span>
+        {{ form.cliente.label}}
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
