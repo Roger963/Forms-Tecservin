@@ -14,7 +14,7 @@ class Formulario(models.Model):
     sex_solicit = models.CharField(max_length = 200)
     state_solicit = models.CharField(max_length = 200)
     nacim_solicit = models.CharField(max_length = 200)
-    datenacim_solict = models.DateTimeField()
+    datenacim_solict = models.DateField(blank = True, null = True)
     nacion_solicit = models.CharField(max_length = 200)
     domic_solicit = models.CharField(max_length = 200)
     ciud_solicit = models.CharField(max_length = 200)
@@ -40,14 +40,14 @@ class Formulario(models.Model):
     sex_asegur = models.CharField(max_length = 200)
     state_asegur = models.CharField(max_length = 200)
     nacim_asegur = models.CharField(max_length = 200)
-    datenacim_asegur = models.DateTimeField(auto_now_add=True)
+    datenacim_asegur = models.DateField(blank=True, null=True)
     nacion_asegur = models.CharField(max_length = 200)
     domic_asegur = models.CharField(max_length = 200)
     tel_asegur = models.IntegerField()
     mail_asegur = models.EmailField(max_length = 200)
 
-    vinc1_benefic = models.CharField(max_length = 200)
-    vinc2_benefic = models.CharField(max_length = 200)
+    vinc_benefic = models.CharField(max_length = 200)
+    specif_benefic = models.CharField(max_length = 200)
     doc_benefic = models.CharField(max_length = 200)
     num_benefic = models.IntegerField()
     apell_benefic = models.CharField(max_length = 200)
@@ -55,7 +55,7 @@ class Formulario(models.Model):
     sex_benefic = models.CharField(max_length = 200)
     state_benefic = models.CharField(max_length = 200)
     nacim_benefic = models.CharField(max_length = 200)
-    datenacim_benefic = models.DateTimeField()
+    datenacim_benefic = models.DateField(blank = True, null = True)
     nacion_benefic = models.CharField(max_length = 200)
     domic_benefic = models.CharField(max_length = 200)
     tel_benefic = models.IntegerField()
@@ -106,14 +106,29 @@ class Formulario(models.Model):
     adicionch_extra = models.CharField(max_length = 200)
     specific_extra = models.CharField(max_length = 200)
     func_extra = models.CharField(max_length = 200)
+    
+    cargo_extra_decl = models.CharField(max_length = 200)
+    datenacim_decl = models.DateField(blank = True, null = True)
+    datenacim_extra_decl = models.DateField(blank = True, null = True)
+    politic_decl = models.CharField(max_length = 200)
+    specif_decl = models.CharField(max_length = 200)
+    con_decl = models.CharField(max_length = 200)
+
+
     canal_extra = models.CharField(max_length = 200)
 
-    ced_file = models.CharField(max_length = 200)
-    serbas_file = models.CharField(max_length = 200)
-    conv_file = models.CharField(max_length = 200)
-    cert_file = models.CharField(max_length = 200)
-    cargo_file = models.CharField(max_length = 200)
-    renta_file = models.CharField(max_length = 200)
+    ced_file = models.FileField(blank = True, null = True,
+        upload_to ='chapters/%Y/%m/%D/')
+    serbas_file = models.FileField(blank = True, null = True,
+        upload_to ='chapters/%Y/%m/%D/')
+    conv_file = models.FileField(blank = True, null = True,
+        upload_to ='chapters/%Y/%m/%D/')
+    cert_file = models.FileField(blank = True, null = True,
+        upload_to ='chapters/%Y/%m/%D/')
+    cargo_file = models.FileField(blank = True, null = True,
+        upload_to ='chapters/%Y/%m/%D/')
+    renta_file = models.FileField(blank = True, null = True,
+        upload_to ='chapters/%Y/%m/%D/')
 
     lugar_declaration = models.CharField(max_length = 200)
     condic_declaration = models.CharField(max_length = 200)

@@ -1,4 +1,5 @@
 from cProfile import label
+from fileinput import FileInput
 from django.forms import ModelForm
 from django import forms
 from .models import Formulario
@@ -7,18 +8,32 @@ class FormularioForm(ModelForm):
   
     class Meta:
         client_choices = [('N','Nuevo'),('R','Renovacion'),]
+        emision_choices = [('Solicitante','Solicitante'),('Otro','Otro'),]
         ramo_choices = (('vehiculo','VEHICULOS'),('vidagrupal','VIDA EN GRUPO'),('vidaindividuak','VIDA INDIVIDUAL'),('incendio','INCENDIO'),('transporte','TRANSPORTE'),('contratistas','CONTRATISTAS'),('casoaviones','CASCO DE AVIONES'),('accidentepersonal','ACCIDENTES PERSONALES'),('asistenciamedica','ASISTENCIA MEDICA'),('equipoelectronico','EQUIPO ELECTRONICO'),('robo','ROBO'),('responsabilidadcivil','RESPONSABILIDAD CIVIL'),('roturamaquinaria','ROTURA DE MAQUINARIA'),('cascobuque','CASCO DE BUQUE'),('cumplimientocontrato','CUMPLIMIENTO DE CONTRATO'),('fidelidad','FIDELIDAD'),('montajeriesgo','MONTAJE TODO RIESGO'),('salud','SALUD'),)
         sex_choices = (('M','M'),('F','F'),)
+        boolean_choices = (('SI','SI'),('NO','NO'),)
+        politic_choices = (('Comercial','Comercial'),('Contractual','Contractual'),('Laborales','Laborales'),('Otros','Otros'))
+        canal_choices = (('DIRECTO','DIRECTO'),('BROKER','BROKER'),('OTROS','OTROS'))
+        extra_choices = (('Familiar','Familiar'),('Broker','Broker'),('Otro','Otro'))
         civilstat_choices = (('Soltero','Soltero'),('Casado','Casado'),('Divorciado','Divorciado'),('U/Libre','U/Libre'),('Viudo','Viudo'),('Separado','Separado'),)
         typeid_choices = (('Cedula','Cedula'),('Pasaporte','Pasaporte'),('RUC','RUC'),)
         bond_choices = (('Familiar','Familiar'),('Comercial','Comercial'),('Laboral','Laboral'),('Ninguna','Ninguna'),('Otros','Otros'))
         vinculo_choices = (('Familiar','Familiar'),('Comercial','Comercial'),('Laboral','Laboral '),('Ninguna','Ninguna'), ('Otros', 'Otros'))
-
+        work_choices = (('Empleado público','Empleado público'),('Empleado Privado','Empleado Privado'),('Negocio propio','Negocio propio'),('Jubilado','Jubilado'),('Estudiante','Estudiante'),('Quehaceres domésticos','Quehaceres domésticos'),('Otros','Otros'))
         prov_choices = (('AZUAY','AZUAY'),('BOLIVAR','BOLIVAR'),('CAÑAR','CAÑAR'),('CARCHI','CARCHI'),('CHIMBORAZO','CHIMBORAZO'),('COTOPAXI','COTOPAXI'),
         ('EL ORO','EL ORO'),('ESMERALDAS','ESMERALDAS'),('GALAPAGOS','GALAPAGOS'),('GUAYAS','GUAYAS'),('IMBABURA','IMBABURA'),('LOJA','LOJA'),('LOS RIOS','LOS RIOS'),
         ('MANABI','MANABI'),('MORRONA SANTIAGO','MORRONA SANTIAGO'),('NAPO','NAPO'),('ORELLANA','ORELLANA'),('PASTAZA','PASTAZA'),('PICHINCHA','PICHINCHA'),
         ('SANTA ELENA','SANTA ELENA'),('SANTO DOMINGO DE LOS TSACHILAS','SANTO DOMINGO DE LOS TSACHILAS'),('SUCUMBIOS','SUCUMBIOS'),('TUNGURAHUA','TUNGURAHUA'),
         ('ZAMORA CHINCHIPE','ZAMORA CHINCHIPE'),)
+        place_choices = (('RESTO ZONAS','RESTO ZONAS'),('24 DE MAYO','24 DE MAYO'),('ALAMOR','ALAMOR'),('ALFREDO BAQUE','ALFREDO BAQUE'),('AMBATO','AMBATO'),('ARCHIDONA','ARCHIDONA'),('ARENILLAS','ARENILLAS'),('ATACAMES','ATACAMES'),('AYANGE','AYANGE'),(' AZOGUES',' AZOGUES'),('BABA','BABA'),('BABAHOYO','BABAHOYO'),('BAEZA','BAEZA'),('BAHIA DE CARA','BAHIA DE CARA'),
+        ('BALAO','BALAO'),('BALSAS','BALSAS'),('BALZAR','BALZAR'),('BAÑOS','BAÑOS'),('BUCAY','BUCAY'),('BUENA FE','BUENA FE'),('CALUMA','CALUMA'),('CAMILO PONCE','CAMILO PONCE'),('CANUTO','CANUTO'),('CAYAMBE','CAYAMBE'),('CHAMBO','CHAMBO'),('CHIMBO','CHIMBO'),('CHONE','CHONE'),('CHUNCHI','CHUNCHI'),('COCA','COCA'),('COLIMES','COLIMES'),('CUENCA','CUENCA'),('DAULE','DAULE'),
+        ('DURAN','DURAN'),('EL CARMEN','EL CARMEN'),('EL CHACO','EL CHACO'),('EL EMPALME','EL EMPALME'),('EL GUABO','EL GUABO'),('EL PLAYON','EL PLAYON'),('EL TRIUNFO','EL TRIUNFO'),('ESMERALDAS','ESMERALDAS'),('EL TRIUNFO','EL TRIUNFO'),('FLAVIO ALFARO','FLAVIO ALFARO'),('GALAPAGOS','GALAPAGOS'),('GUALACEO','GUALACEO'),('GUARANDA','GUARANDA'),('GUAYAQUIL','GUAYAQUIL'),
+        ('HUAQUILLAS','HUAQUILLAS'),('IBARRA','IBARRA'),('ISIDRO AYORA','ISIDRO AYORA'),('JAMA','JAMA'),('JIPIJAPA','JIPIJAPA'),('JOYA DE LOS S','JOYA DE LOS S'),('JUJAN','JUJAN'),('JUNIN','JUNIN'),('LA MANA','LA MANA'),('LAGO AGRIO','LAGO AGRIO'),('LAS LAJAS','LAS LAJAS'),('LATACUNGA','LATACUNGA'),('LIBERTAD','LIBERTAD'),('LOJA','LOJA'),('LOMAS DE SARG','LOMAS DE SARG'),
+        ('MACAS ','MACAS '),('MACHALA','MACHALA'),('MANTA','MANTA'),('MARCELINO MAR','MARCELINO MAR'),('MEJIA','MEJIA'),('MILAGRO','MILAGRO'),('MOCACHE','MOCACHE'),('MOLTALVO','MOLTALVO'),('MONTECRISTI','MONTECRISTI'),('MORONA','MORONA'),('NARANJAL','NARANJAL '),('NOBOL','NOBOL'),('OLMEDO','OLMEDO'),('OTAVALO','OTAVALO'),('OÑA','OÑA'),('PALENQUE','PALENQUE'),('PALESTINA','PALESTINA'),
+        ('PALLATANGA','PALLATANGA'),('PAGUA','PAGUA'),('PASAJE','PASAJE'),('PATATE','PATATE'),('PAUTE','PAUTE'),('PEDERNALES','PEDERNALES'),('PEDRO CARBO','PEDRO CARBO'),('PELILEO','PELILEO'),('PIMAMPIRO','PIMAMPIRO'),('PIÑAS','PIÑAS'),('PLAYAS','PLAYAS'),('JUJAN','JUJAN'),('PORTOVELO','PORTOVELO'),('PORTOVIEJO','PORTOVIEJO'),('POSORJA','POSORJA'),('PTA. BARANDUA','PTA. BARANDUA'),
+        ('PUEBLO VIEJO ','PUEBLO VIEJO '),('PUERTO AYORA','PUERTO AYORA'),('PUERTO VILLAM','PUERTO VILLAM'),('PUJILI','PUJILI'),('PUYANGO','PUYANGO'),('PUYO','PUYO '),('QUEVEDO','QUEVEDO'),('QUININDE','QUININDE'),('QUITO','QUITO'),('RIOBAMBA','RIOBAMBA'),('ROCAFUERTE','ROCAFUERTE'),('RUMIÑAHUI','RUMIÑAHUI'),('SALCEDO','SALCEDO'),('SALINAS','SALINAS'),('SALITRE','SALITRE'),
+        ('SAN CRISTOBAL','SAN CRISTOBAL '),('SAN JOSE','SAN JOSE'),('SAN MIGUEL','SAN MIGUEL'),('SAN VICENTE','SAN VICENTE'),('SALGOLQUI','SALGOLQUI'),('SANTA ELENA','SANTA ELENA'),('SANTA ROSA','SANTA ROSA'),('SANTO DOMINGO','SANTO DOMINGO'),('SIG SIG','SIG SIG'),('SIMON BOLIVAR','SIMON BOLIVAR'),('STA. LUCIA','STA. LUCIA'),('STA. ROSA','STA. ROSA'),('TENA','TENA'),('TRIUNFO','TRIUNFO'),
+        ('TULCAN','TULCAN'),('TUMBEZ','TUMBEZ'),('URDANETA','URDANETA'),('VALENCIA','VALENCIA'),('VENTANAS','VENTANAS'),('VINCES','VINCES'),('YAGUACHI','YAGUACHI'),('ZAMORA','ZAMORA'),('ZARUMA','ZARUMA'),)
         city_choices = (('AFG','AFGANISTAN'),('AX','ALAND'),('AL','ALBANIA'),('DEU','ALEMANIA'),('AD','ANDORRA'),('AO','ANGOLA'),('AI','ANGUILA'),('AQ','ANTARTIDA'),('AG','ANTIGUA Y BARBUDA'),('AN','ANTILLAS NEERLANDESAS'),('SA','ARABIA SAUDITA'),('DZ','ARGELIA'),('ARP','ARGENTINA'),('AM','ARMENIA'),('AW','ARUBA'),('AUD','AUSTRALIA'),('AT','AUSTRIA'),('AZ','AZERBAIYAN'),
             ('BS','BAHAMAS'),('BH','BAHREIN'),('BB','BARBADOS'),('BLR','BELARAUS'),('BE','BELGICA'),('BZ','BELICE'),('BJ','BENIN'),('BM','BERMUDAS'),('BY','BIELORRUSIA'),('MMR','BIRMANIA'),('BOL','BOLIVIA'),('BA','BOSNIA Y HERZEGOVINA'),('BW','BOTSUANA'),('BRC','BRASIL'),('BN','BRUNEI'),('BG','BULGARIA'),('BF','BURKINA FASO'),('BDI','BURUNDI'),('BT','BUTAN'),
             ('CV','CABO VERDE'),('KH','CAMBOYA'),('CM','CAMERUN'),('CAD','CANADA'),('TD','CHAD'),('CLP','CHILE'),('CHN','CHINA'),('CY','CHIPRE'),('VA','CIUDAD DEL VATICANO'),('COP','COLOMBIA'),('KM','COMORAS'),('PRK','COREA DEL NORTE'),('KR','COREA DEL SUR'),('CIV','COSTA DE MARFIL'),('CR','CRIMEA'),('HR','CROACIA'),('CUP','CUBA'),('DKK','DINAMARCA'),('DM','DOMINICA'),
@@ -33,23 +48,13 @@ class FormularioForm(ModelForm):
             ('PM','SAN PEDRO Y MIQUELON'),('VC','SAN VICENTE Y LAS GRANADINAS'),('SH','SANTA HELENA'),('LC','SANTA LUCIA'),('ST','SANTO TOME Y PRINCIPE'),('SN','SENEGAL'),('RS','SERBIA'),('SC','SEYCHELLES'),('SL','SIERRA LEONA'),('SG','SINGAPUR'),('SYR','SIRIA'),('SOM','SOMALIA'),('SSD','SOUTH SUDAN'),('LK','SRI LANKA'),('SZ','SUAZILANDIA'),('ZA','SUDAFRICA'),
             ('SDN','SUDAN'),('SEK','SUECIA'),('CHF','SUIZA'),('SR','SURINAM'),('SJ','SVALBARD Y JAN MAYEN'),('TH','TAILANDIA'),('TW','TAIWAN'),('TZ','TANZANIA'),('TJ','TAYIKISTAN'),('IO','TERRITORIO BRITáNICO DEL OCéANO ÍNDICO'),('TF','TERRITORIOS AUSTRALES FRANCESES'),('PS','TERRITORIOS PALESTINOS'),('TL','TIMOR ORIENTAL'),('TG','TOGO'),('TK','TOKELAU'),('TO','TONGA'),
             ('TT','TRINIDAD Y TOBAGO'),('TN','TUNEZ'),('TM','TURKMENISTAN'),('TR','TURQUIA'),('TV','TUVALU'),('UKR','UCRANIA'),('UG','UGANDA'),('EU','UNION EUROPEA'),('SU','UNION SOVIETICA'),('UZ','URBEKISTAN'),('UYP','URUGUAY'),('VU','VANUATU'),('VEB','VENEZUELA'),('VN','VIETNAM'),('WF','WALLIS Y FUTUNA'),('YEM','YEMEN'),('DJ','YIBUTI'),('ZM','ZAMBIA'),('ZWE','ZIMBABUE'),)
-        MEDIA_CHOICES = [
-            ('Audio', (
-                    ('vinyl', 'Vinyl'),('cd', 'CD'),)
-            ),
-            ('Video', (
-                    ('vhs', 'VHS Tape'),('dvd', 'DVD'),) 
-            ),
-            ('unknown', 'Unknown'),
-        ]
-        
         model = Formulario
         fields = '__all__'
         labels = {
             'cliente':'CLIENTE',
-            'tiposeguro' : 'Tipo de Seguro (Ramo)',
-            'sumasegurada': 'Total Suma Asegurada USD',
-            'doc_solicit': 'Tipo de ID',
+            'tiposeguro' :'Tipo de Seguro (Ramo)',
+            'sumasegurada':'Total Suma Asegurada USD',
+            'doc_solicit':'Tipo de ID',
             'num_solicit':'Número de ID',
             'apell_solicit':'Apellidos',
             'name_solicit':'Nombres',
@@ -85,8 +90,8 @@ class FormularioForm(ModelForm):
             'domic_asegur':'Dirección de domicilio',
             'tel_asegur':'Teléfono',
             'mail_asegur':'Email',
-            'vinc1_benefic':'VÍNCULO',
-            'vinc2_benefic':'Especifique',
+            'vinc_benefic':'VÍNCULO',
+            'specif_benefic':'Especifique',
             'doc_benefic':'Tipo de ID',
             'num_benefic':'Número de ID',
             'apell_benefic':'Apellidos',
@@ -140,6 +145,12 @@ class FormularioForm(ModelForm):
             #'adicionch_extra':,
             #'specific_extra':'Especifique',
             #'func_extra':'',
+            'cargo_extra_decl': 'Indicar: Cargo / Función / Jerarquía o relación con la Persona Expuesta Políticamente',
+            'datenacim_decl': 'Fecha del nombramiento de designación',
+            'datenacim_extra_decl': 'Fecha de culminación del cargo, en caso de aplicar',
+            'politic_decl': 'Adicionalmente, declaro que mantengo relación tipo',
+            'specif_decl': 'Especifique Relación',
+            'con_decl': 'Con',
             #'canal_extra':,
             #'ced_file':,
             #'serbas_file':,
@@ -151,107 +162,114 @@ class FormularioForm(ModelForm):
             'condic_declaration':'¿Esta de acuerdo con las condiciones?',
         }
         widgets={
-            'cliente':
-            'tiposeguro':
-            'sumasegurada':
-            'doc_solicit':
-            'num_solicit':
-            'apell_solicit':
-            'name_solicit':
-            'sex_solicit':
-            'state_solicit':
-            'nacim_solicit':
-            'datenacim_solict':
-            'nacion_solicit':
-            'domic_solict':
-            'ciud_solicit':
-            'pais_solicit':
-            'prov_solicit':
-            'tel_solicit':
-            'mail_solicit':
-            'mail_fact_solicit':
-            'mail_form_solicit':
-            'contac_solicit':
-            'doc_conv':
-            'num_conv':
-            'apell_conv':
-            'name_conv':
-            'vinc_asegur':
-            'specif_asegur':
-            'doc_asegur':
-            'num_asegur':
-            'apell_asegur':
-            'name_asegur':
-            'sex_asegur':
-            'state_asegur':
-            'nacim_asegur':
-            'datenacim_asegur':
-            'nacion_asegur':
-            'domic_asegur':
-            'tel_asegur':
-            'mail_asegur':
-            'vinc1_benefic':
-            'vinc2_benefic':
-            'doc_benefic':
-            'num_benefic':
-            'apell_benefic':
-            'name_benefic':
-            'sex_benefic':
-            'state_benefic':
-            'nacim_benefic':
-            'datenacim_benefic':
-            'nacion_benefic':
-            'domic_benefic':
-            'tel_benefic':
-            'mail_benefic':
-            'type_work':
-            'especify_work':
-            'razon_work':
-            'sector_work':
-            'activity_work':
-            'cargo_work':
-            'domic_work':
-            'city_work':
-            'ciud_work':
-            'mail_work':
-            'tel_work':
-            'ingress_info':
-            'mesuality_info':
-            'other_info':
-            'activos_info':
-            'pasivos_info':
-            'patrim_info':
-            'name_reference':
-            'parentesc_reference':
-            'tel_reference':
-            'target_reference':
-            'instfin_reference':
-            'ctatype_reference':
-            'instbanc_reference':
-            'nameoth_reference':
-            'parentescoth_reference':
-            'teloth_reference':
-            'targetoth_reference':
-            'instfinoth_reference':
-            'ctatypeoth_reference':
-            'instbancoth_reference':
-            'emision_factur':
-            'social_factur':
-            'rucci_factur':
-            'tel_factur':
-            'domic_factur':
-            'relacion_factur':
-            'names_extra':
-            'adicionch_extra':
-            'specific_extra':
-            'func_extra':
-            'canal_extra':
-            'ced_file':
-            'serbas_file':
-            'conv_file':
-            'cert_file':
-            'cargo_file':
-            'renta_file':
-            'lugar_declaration':
-            'condic_declaration':
+            'cliente': forms.RadioSelect(choices=client_choices),
+            'tiposeguro': forms.Select(choices=ramo_choices),
+            'sumasegurada': forms.NumberInput(),
+            'doc_solicit': forms.RadioSelect(choices = typeid_choices),
+            'num_solicit':forms.NumberInput(),
+            'apell_solicit': forms.TextInput(),
+            'name_solicit': forms.TextInput(),
+            'sex_solicit': forms.RadioSelect(choices=sex_choices),
+            'state_solicit': forms.RadioSelect(choices=civilstat_choices),
+            'nacim_solicit': forms.TextInput(),
+            'datenacim_solict': forms.DateInput(attrs={'type':'date'}),
+            'nacion_solicit': forms.TextInput(),
+            'domic_solict': forms.TextInput(),
+            'ciud_solicit': forms.TextInput(),
+            'pais_solicit': forms.Select(choices=city_choices),
+            'prov_solicit': forms.Select(choices=prov_choices),
+            'tel_solicit': forms.TextInput(),
+            'mail_solicit': forms.EmailInput(),
+            'mail_fact_solicit': forms.EmailInput(),
+            'mail_form_solicit': forms.EmailInput(),
+            'contac_solicit': forms.TextInput(),
+            'doc_conv': forms.RadioSelect(choices=typeid_choices),
+            'num_conv': forms.NumberInput(),
+            'apell_conv': forms.TextInput(),
+            'name_conv': forms.TextInput(),
+            'vinc_asegur': forms.RadioSelect(choices=bond_choices),
+            'specif_asegur': forms.TextInput(),
+            'doc_asegur': forms.RadioSelect(choices = typeid_choices),
+            'num_asegur': forms.NumberInput(),
+            'apell_asegur': forms.TextInput(),
+            'name_asegur': forms.TextInput(),
+            'sex_asegur': forms.RadioSelect(choices=sex_choices),
+            'state_asegur': forms.RadioSelect(choices=civilstat_choices),
+            'nacim_asegur': forms.TextInput(),
+            'datenacim_asegur': forms.DateInput(attrs={'type':'date'}),
+            'nacion_asegur': forms.TextInput(),
+            'domic_asegur':forms.TextInput(),
+            'tel_asegur': forms.NumberInput(),
+            'mail_asegur': forms.EmailInput(),
+            'vinc_benefic': forms.RadioSelect(choices=bond_choices),
+            'specif_benefic': forms.TextInput(),
+            'doc_benefic': forms.RadioSelect(choices = typeid_choices),
+            'num_benefic': forms.NumberInput(),
+            'apell_benefic': forms.TextInput(),
+            'name_benefic': forms.TextInput(),
+            'sex_benefic': forms.RadioSelect(choices=sex_choices),
+            'state_benefic': forms.RadioSelect(choices=civilstat_choices),
+            'nacim_benefic': forms.TextInput(),
+            'datenacim_benefic': forms.DateInput(attrs={'type':'date'}),
+            'nacion_benefic': forms.TextInput(),
+            'domic_benefic': forms.TextInput(),
+            'tel_benefic': forms.NumberInput(),
+            'mail_benefic': forms.EmailInput(),
+            'type_work': forms.RadioSelect(choices=work_choices),
+            'especify_work': forms.TextInput(),
+            'razon_work': forms.TextInput(),
+            'sector_work': forms.TextInput(),
+            'activity_work': forms.TextInput(),
+            'cargo_work': forms.TextInput(),
+            'domic_work': forms.TextInput(),
+            'city_work': forms.Select(choices=city_choices),
+            'ciud_work': forms.TextInput(),
+            'mail_work': forms.EmailInput(),
+            'tel_work': forms.NumberInput(),
+            'ingress_info': forms.NumberInput(),
+            'mesuality_info': forms.NumberInput(),
+            'other_info': forms.NumberInput(),
+            'activos_info': forms.NumberInput(),
+            'pasivos_info': forms.NumberInput(),
+            'patrim_info': forms.NumberInput(),
+            'name_reference': forms.TextInput(),
+            'parentesc_reference': forms.TextInput(),
+            'tel_reference': forms.NumberInput(),
+            'target_reference': forms.NumberInput(),
+            'instfin_reference': forms.TextInput(),
+            'ctatype_reference': forms.NumberInput(),
+            'instbanc_reference': forms.TextInput(),
+            'nameoth_reference': forms.TextInput(),
+            'parentescoth_reference': forms.TextInput(),
+            'teloth_reference': forms.NumberInput(),
+            'targetoth_reference': forms.NumberInput(),
+            'instfinoth_reference': forms.TextInput(),
+            'ctatypeoth_reference': forms.NumberInput(),
+            'instbancoth_reference': forms.TextInput(),
+            'emision_factur': forms.RadioSelect(choices=emision_choices),
+            'social_factur': forms.TextInput(),
+            'rucci_factur': forms.NumberInput(),
+            'tel_factur': forms.NumberInput(),
+            'domic_factur': forms.TextInput(),
+            'relacion_factur': forms.TextInput(),
+            'names_extra': forms.TextInput(),
+            'adicionch_extra': forms.Select(choices=extra_choices),
+            'specific_extra': forms.TextInput(),
+            'func_extra': forms.Select(choices=boolean_choices),
+            'cargo_extra_decl': forms.TextInput(),
+            'datenacim_decl': forms.DateInput(attrs={'type':'date'}),
+            'datenacim_extra_decl': forms.DateInput(attrs={'type':'date'}),
+            'politic_decl': forms.Select(choices=politic_choices),
+            'specif_decl': forms.TextInput(),
+            'con_decl': forms.TextInput(),
+
+            'canal_extra': forms.Select(choices=canal_choices),
+            'ced_file': forms.FileInput(),
+            'serbas_file': forms.FileInput(),
+            'conv_file': forms.FileInput(),
+            'cert_file': forms.FileInput(),
+            'cargo_file': forms.FileInput(),
+            'renta_file': forms.FileInput(),
+            'lugar_declaration': forms.Select(choices=place_choices),
+            'condic_declaration': forms.CheckboxInput(),
         }
