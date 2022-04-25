@@ -273,3 +273,6 @@ class FormularioForm(ModelForm):
             'lugar_declaration': forms.Select(choices=place_choices),
             'condic_declaration': forms.CheckboxInput(),
         }
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)

@@ -3,13 +3,28 @@ html {
 }
 body {
     font-size : 16px;
-}
+    }
 h1 {
     text-align : center;
     font-size : 2rem;
     width: 20rem;
 }
+h2 {
+    font-size : 1.4rem;
+    color: whitesmoke;
+    background : #632423 ;
+}
 
 span {
     font-size: 2 rem;
+}
+
+.relacioncomercial{
+    display :flex;
+    flex-wrap: wrap;
+
+    
+}
+.cliente {
+    display :flex,
 }

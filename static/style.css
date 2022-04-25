@@ -1,0 +1,23 @@
+html {
+    font-size : 62.5%;
+}
+body {
+    font-size : 160px;
+    background: red;
+}
+h1 {
+    text-align : center;
+    font-size : 2rem;
+    width: 20rem;
+}
+h2 {
+    font-size : 8rem;
+}
+
+span {
+    font-size: 2 rem;
+}
+
+.relacioncomercial{
+    display: flex;
+}

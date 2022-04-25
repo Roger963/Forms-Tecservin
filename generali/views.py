@@ -5,6 +5,7 @@ from .forms import FormularioForm
 # Create your views here.
 def form_generali(request):
     if request.POST:
+    #if (request.method == 'POST' ):
         form = FormularioForm(request.POST, request.FILES)
         print(request.FILES)
         if form.is_valid():
